@@ -4,7 +4,7 @@
   (global.MicroModal = factory());
 }(this, (function () { 'use strict';
 
-  var version = "0.3.2";
+  var version = "0.4.0";
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -98,14 +98,21 @@
           }
 
           triggers.filter(Boolean).forEach(function (trigger) {
-            trigger.addEventListener('click', function () {
-              return _this.showModal();
+            trigger.addEventListener('click', function (event) {
+              return _this.showModal(event);
+            });
+            trigger.addEventListener('keydown', function (event) {
+              if (event.keyCode === 32) {
+                event.preventDefault();
+                _this.showModal(event);
+              }
             });
           });
         }
       }, {
         key: 'showModal',
-        value: function showModal() {
+        value: function showModal(event) {
+          event.preventDefault();
           this.activeElement = document.activeElement;
           this.modal.setAttribute('aria-hidden', 'false');
           this.modal.classList.add('is-open');
